@@ -1,0 +1,14 @@
+[Unit]
+Description=Run the .service file daily
+
+
+[Timer]
+OnCalendar=*-*-* 05:00:00
+# Timer will run daily at 05:00
+
+Persistent=true
+# Ensures that the task is not missed if the system didn't run at the scheduled time. 
+
+[Install]
+WantedBy=timers.target
+# The timer will start when the system is initialized and the timers group is activated.

@@ -230,6 +230,98 @@ sudo systemctl start nginx
 sudo systemctl status nginx
 ```
 
+## Task Four - Installing and configuring ufw for ssh and HTTP
 
+
+1.  Install ufw using this command:
+
+```
+sudo pacman -Syu ufw
+```
+
+
+2. Allow SSH and HTTP before enabling ufw:
+
+Use these two commands:
+
+```
+sudo ufw allow ssh
+```
+
+```
+sudo ufw allow http
+```
+
+
+3. Enable SSH rate limiting to prevent brute-force attacks by using the following command:
+
+```
+sudo ufw limit 22
+```
+
+- this ensures security and protect against unauthorized attempts.
+
+
+4. Enable UFW:
+
+```
+sudo ufw enable
+```
+
+5. Check the UFW status to see whether the rules are applied.
+
+```
+sudo ufw status 
+```
+
+The output should look like this:
+
+```
+Status: active
+
+To                         Action      From
+--                         ------      ----
+22                         LIMIT       Anywhere
+80                         ALLOW       Anywhere
+22 (v6)                    LIMIT       Anywhere (v6)
+80 (v6)                    ALLOW       Anywhere (v6)
+```
+
+
+
+## Task Five: Verification
+
+
+1. Reload and Restart
+
+Use these following commands to reload the system and start it up again:
+
+```
+sudo systemctl daemon-reload
+```
+
+```
+sudo systemctl start nginx.service
+```
+
+
+2. Get the IP address
+
+- You can get the ip address either by going back to your droplet and copy the ip address from there.
+
+OR
+ 
+- You can type in the following command `curl ifconfig.me` to know the ip address.
+
+- Then open a new tab and paste the address along with `http://` and you will see you have successfully set up a Bash script that generates a static index.html file.
+
+
+## REFERENCES
+
+- https://wiki.archlinux.org/title/Systemd/Timers
+
+- https://wiki.archlinux.org/title/Nginx
+
+- https://wiki.archlinux.org/title/Uncomplicated_Firewall
 
 

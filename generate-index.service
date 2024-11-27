@@ -1,0 +1,17 @@
+[Unit]
+Description=Generate Index HTML
+
+
+[Service]
+User=webgen 
+# runs the service as the webgen user
+
+Group=webgen
+# runs the service as the webgen group
+
+ExecStart=/var/lib/webgen/bin/generate_index
+# specifies which script is to be run
+
+[Install]
+WantedBy=multi-user.target
+# this will start the service during system boot and access the non-graphic multi user mode.
