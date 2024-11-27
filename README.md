@@ -45,3 +45,67 @@ Here,
 
 ## Task 2 -> Create the .service and .timer files. ##
 
+1. Create a service file which will run the **generate_index** script using the webgen user and group.
+
+```
+sudo vim /etc/systemd/system/generate-index.service
+```
+
+2. Create a timer file which will run the service file everyday at 05:00, regardless of year, month or week.
+
+```
+sudo vim /etc/systemd/system/generate-index.timer
+```
+
+3. Refresh the systemd's configuration to make it aware of any new or altered changes in both the .service and .timer files.
+
+```
+sudo systemctl daemon-reload
+```
+
+4. Enable the timer to make sure it starts automatically.
+
+```
+sudo systemctl enable generate-index.timer
+```
+
+5. Manually start the service to test it is running without errors.
+
+```
+sudo systemctl start generate-index.timer
+```
+
+6. To verify whether the script is running correctly:
+
+```
+sudo systemctl status generate-index.timer
+```
+
+The output will look like this:
+![Screenshot](timer.png)
+
+7. Do the exact same steps to enable and start the service unit file.
+
+```
+sudo systemctl enable generate-index.service
+sudo systemctl start generate-index.service
+```
+
+8. Verify the execution of the script.
+
+```
+sudo systemctl status generate-index.service
+```
+
+- The output will look like this:
+![Screenshot](service.png)
+
+
+9. Confirm the successful execution of the file or debug any issues.
+
+```
+sudo journalctl -u generate-index.service
+```
+- The output will look like this:
+![Screenshot](troubleshoot.png)
+
