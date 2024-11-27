@@ -208,7 +208,7 @@ sudo nginx -t
 ```
 You will see something like this:
 
-![Screenshot](syntax-check.png)
+![Screenshot](check-status.png)
 
 
 10. Restart Nginx to make suew that changes are applied.
