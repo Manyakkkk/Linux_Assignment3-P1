@@ -109,3 +109,127 @@ sudo journalctl -u generate-index.service
 - The output will look like this:
 ![Screenshot](troubleshoot.png)
 
+## Task 3 - Configuring Nginx
+
+
+1. Our first step is to install Nginx using this command:
+
+```
+sudo pacman -Syu nginx
+```
+
+2. Next we will configure the Nginx file.
+First, we have to open it with this command:
+
+```
+sudo nvim /etc/nginx/nginx.conf
+```
+
+Second, locate `user` and to change it to:
+
+```
+user webgen;
+```
+
+> [!NOTE]
+> In the script, user is loccated at the very top. Also dont forget to remove the "#" sign before it.
+
+4. Then we will create two separate server block files instead of modifying the main nginx.conf file. This is because it is easier to manage configurations this way, and if any changes are to be made, it wouldn't affect the main nginx.conf file. 
+
+
+Now, we will create a directory and name it, `sites-available`:
+
+ ```
+sudo mkdir -p /etc/nginx/sites-available
+```
+
+Then we will create the second one and name it, `sites-enable`:
+
+```
+sudo mkdir -p /etc/nginx/sites-enabled
+```
+
+5. Now we will create a new config file to create a new server block. Use the following command to do the same:
+
+```
+sudo nvim /etc/nginx/sites-available/webgen.conf
+```
+
+6. Once inside the new script, add the following contents:
+
+```
+server {
+   listen 80;
+   server_name localhost-webgen;
+
+   root /var/lib/webgen/HTML;
+   index index.html;
+
+   location / {
+      try_files $uri $uri/ =404;
+   }
+}
+```
+
+> [!NOTE]
+> Replace the `server_name` to your actual ip address which you can know by using the `curl ifconfig.me` command.
+
+- **Explanation:**
+
+The server is set up to listen on port 80 and serve files from the /var/lib/webgen/HTML directory in response to requests to localhost-webgen by this Nginx server block. It ensures that a 404 Not Found error will be displayed for any wrong requests and that only existing files or directories are provided.
+
+7. Next, we want to create a symbolic link in order to enable our new configuration.
+
+This can be done by using this command:
+
+```
+sudo ln -s /etc/nginx/sites-available/webgen.conf /etc/nginx/sites-enabled/
+```
+
+8. Now we have to add a new directory in the script. Open the file using:
+
+ `sudo nvim /etc/nginx/nginx.conf`
+
+After it is opened, locate the http section and add the following line:
+
+```
+include /etc/nginx/sites-enabled/*.conf;
+```
+
+LIKE THIS:
+
+![Screenshot] (sites-enable.png)
+
+
+9. Confirm that the Nginx file has no errors, run this command:
+
+```
+sudo nginx -t
+```
+You will see something like this:
+
+![Screenshot](syntax-check.png)
+
+
+10. Restart Nginx to make suew that changes are applied.
+
+```
+sudo systemctl restart nginx
+```
+
+11. Start Nginx:
+
+```
+sudo systemctl start nginx
+```
+
+
+12. To confirm that Nginx is up and running, check the status:
+
+```
+sudo systemctl status nginx
+```
+
+
+
+
