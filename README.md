@@ -196,9 +196,7 @@ After it is opened, locate the http section and add the following line:
 include /etc/nginx/sites-enabled/*.conf;
 ```
 
-LIKE THIS:
 
-![Screenshot] (sites-enable.png)
 
 
 9. Confirm that the Nginx file has no errors, run this command:
